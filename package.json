@@ -6,9 +6,9 @@
   "description": "FRONTIER — a sci-fi expedition fitness RPG. Local-first, no account required.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc --noEmit -p . && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit",
+    "typecheck": "tsc --noEmit -p .",
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "node scripts/e2e.mjs"

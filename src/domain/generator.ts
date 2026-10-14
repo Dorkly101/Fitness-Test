@@ -197,7 +197,7 @@ export function generateDailyBoard(profile: UserProfile, allSessions: ActivitySe
     const m = pick(pool, 'recommended');
     used.push(m);
     const { minutes } = suggestedMinutes(m, profile, sessions);
-    rec = makeDaily('recommended', m, minutes, date, 'Your first field log — {m} is at the top of your list.', profile);
+    rec = makeDaily('recommended', m, minutes, date, 'Top of your list: {m}.', profile);
   } else {
     const needs = weeklyNeeds(profile, sessions, now);
     let cands: Modality[] = [];
@@ -242,7 +242,8 @@ export function generateDailyBoard(profile: UserProfile, allSessions: ActivitySe
   const funCands = [...pool].sort((a, b) => score(b) - score(a));
   const fm = pick(funCands, 'fun');
   const fmMinutes = suggestedMinutes(fm, profile, sessions).minutes;
-  const funReason = daysSinceLast(fm, sessions, now) >= 7 ? 'You haven’t done {m} in a while.' : profile.favouriteModalities.includes(fm) ? 'One of your favourites.' : 'Something different for the log.';
+  const neverDone = !sessions.some((s) => s.modality === fm);
+  const funReason = neverDone ? 'Not in your log yet — try {m}.' : daysSinceLast(fm, sessions, now) >= 7 ? 'You haven’t done {m} in a while.' : profile.favouriteModalities.includes(fm) ? 'One of your favourites.' : 'Something different for the log.';
   missions.push(makeDaily('fun', fm, fmMinutes, date, funReason, profile));
 
   return { date, generatedAt: now.toISOString(), missions, restDay };

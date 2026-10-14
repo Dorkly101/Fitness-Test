@@ -149,6 +149,8 @@ export interface ActiveTimer {
   details: SessionDetails;
   missionInstanceId?: string;
   title: string;
+  /** True once the player pressed Finish and is confirming details. */
+  reviewing?: boolean;
 }
 
 export interface StrengthExercise {
